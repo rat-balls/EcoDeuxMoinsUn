@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ username }}{% endblock %}
+
+{% block body %}
+<style>
+    * { font-family: Tahoma; padding: 0; margin: 0; }
+    .profile { background: #F5F5F5; padding: 16px; }
+</style>
+
+<div class="profile">
+    <h1>{{ username }}</h1>
+    <br>
+    <h4>{{ name }} {{ surname }}</h4>
+    <h5>{{ email }}</h5>
+
+</div>
+
+{% endblock %}
