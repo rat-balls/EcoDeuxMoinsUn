@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -43,6 +45,14 @@ class Users
 
     #[ORM\Column]
     private ?int $point_total = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CurrentChallenge::class)]
+    private Collection $challenges;
+
+    public function __construct()
+    {
+        $this->challenges = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -165,6 +175,36 @@ class Users
     public function setPointTotal(int $point_total): static
     {
         $this->point_total = $point_total;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CurrentChallenge>
+     */
+    public function getChallenges(): Collection
+    {
+        return $this->challenges;
+    }
+
+    public function addChallenge(CurrentChallenge $challenge): static
+    {
+        if (!$this->challenges->contains($challenge)) {
+            $this->challenges->add($challenge);
+            $challenge->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChallenge(CurrentChallenge $challenge): static
+    {
+        if ($this->challenges->removeElement($challenge)) {
+            // set the owning side to null (unless already changed)
+            if ($challenge->getUser() === $this) {
+                $challenge->setUser(null);
+            }
+        }
 
         return $this;
     }

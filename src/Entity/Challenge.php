@@ -40,6 +40,9 @@ class Challenge
     #[ORM\Column]
     private ?int $status = null;
 
+    #[ORM\OneToOne(inversedBy: 'challenge', cascade: ['persist', 'remove'])]
+    private ?CurrentChallenge $current_challenge = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +152,18 @@ class Challenge
     public function setStatus(int $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCurrentChallenge(): ?CurrentChallenge
+    {
+        return $this->current_challenge;
+    }
+
+    public function setCurrentChallenge(?CurrentChallenge $current_challenge): static
+    {
+        $this->current_challenge = $current_challenge;
 
         return $this;
     }

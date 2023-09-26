@@ -25,6 +25,13 @@ class CurrentChallenge
     #[ORM\Column(nullable: true)]
     private ?int $status = null;
 
+    #[ORM\ManyToOne(inversedBy: 'challenges')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Users $user = null;
+
+    #[ORM\OneToOne(mappedBy: 'current_challenge', cascade: ['persist', 'remove'])]
+    private ?Challenge $challenge = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +81,40 @@ class CurrentChallenge
     public function setStatus(?int $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+
+    public function setUser(?Users $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getChallenge(): ?Challenge
+    {
+        return $this->challenge;
+    }
+
+    public function setChallenge(?Challenge $challenge): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($challenge === null && $this->challenge !== null) {
+            $this->challenge->setCurrentChallenge(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($challenge !== null && $challenge->getCurrentChallenge() !== $this) {
+            $challenge->setCurrentChallenge($this);
+        }
+
+        $this->challenge = $challenge;
 
         return $this;
     }
