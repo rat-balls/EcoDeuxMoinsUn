@@ -35,7 +35,7 @@ class Challenge
     private ?int $created_by = null;
 
     #[ORM\Column]
-    private ?datetime $created_at = null;
+        private ?datetime $created_at = null;
 
     #[ORM\Column]
     private ?int $status = null;
@@ -120,24 +120,24 @@ class Challenge
         return $this;
     }
 
-    public function getCreatedB(): ?int
+    public function getCreatedBy()
     {
-        return $this->created_b;
+        return $this->created_by;
     }
 
-    public function setCreatedB(int $created_b): static
+    public function setCreatedBy( $created_by): static
     {
-        $this->created_b = $created_b;
+        $this->created_by = $created_by;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?int
+    public function getCreatedAt()
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(int $created_at): static
+    public function setCreatedAt( $created_at): static
     {
         $this->created_at = $created_at;
 
