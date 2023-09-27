@@ -38,8 +38,11 @@
                 <td>{{ challenge.status }}</td>
                 <td>
                     <a href="{{ path('app_challenge_show', {'id': challenge.id}) }}">show</a>
-                    <a href="{{ path('app_challenge_edit', {'id': challenge.id}) }}">edit</a>
-                    
+                    {% if app.user %}
+                        {% if app.user.role == 1 %}
+                            <a href="{{ path('app_challenge_edit', {'id': challenge.id}) }}">edit</a>
+                        {% endif %}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
