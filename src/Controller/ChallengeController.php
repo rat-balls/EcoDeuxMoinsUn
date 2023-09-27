@@ -81,4 +81,5 @@ class ChallengeController extends AbstractController
 
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
