@@ -27,7 +27,7 @@ class ImportCsvCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $csvFile = '/Users/hamzabenalouane/EcoDeuxMoinsUn/EcoDeuxMoinsUn/Ecogestes.csv';
+        $csvFile = 'Ecogestes.csv';
 
         if (!file_exists($csvFile)) {
             $output->writeln('Le fichier CSV n\'existe pas.');
