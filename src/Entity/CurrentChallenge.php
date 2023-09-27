@@ -27,7 +27,7 @@ class CurrentChallenge
 
     #[ORM\ManyToOne(inversedBy: 'challenges')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user = null;
+    private ?User $user = null;
 
     #[ORM\OneToOne(mappedBy: 'current_challenge', cascade: ['persist', 'remove'])]
     private ?Challenge $challenge = null;
@@ -85,12 +85,12 @@ class CurrentChallenge
         return $this;
     }
 
-    public function getUser(): ?Users
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?Users $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 
