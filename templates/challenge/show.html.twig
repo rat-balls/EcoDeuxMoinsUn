@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Challenge{% endblock %}
+
+{% block body %}
+    <h1>Challenge</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ challenge.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ challenge.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ challenge.description }}</td>
+            </tr>
+            <tr>
+                <th>Conditions</th>
+                <td>{{ challenge.conditions }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ challenge.category }}</td>
+            </tr>
+            <tr>
+                <th>Subcategory</th>
+                <td>{{ challenge.subcategory }}</td>
+            </tr>
+            <tr>
+                <th>Points</th>
+                <td>{{ challenge.points }}</td>
+            </tr>
+            <tr>
+                <th>Created_by</th>
+                <td>{{ challenge.createdBy }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ challenge.createdAt }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ challenge.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_challenge_index') }}">back to list</a>
+
+    <a href="{{ path('app_challenge_edit', {'id': challenge.id}) }}">edit</a>
+
+    {{ include('challenge/_delete_form.html.twig') }}
+{% endblock %}
