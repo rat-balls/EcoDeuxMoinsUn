@@ -17,7 +17,7 @@ class ProfileController extends AbstractController
     public function profile()
     {   
         if(!$this->getUser()) {
-            return $this->render('home/index.html.twig');
+            return $this->render('profile/notfound.html.twig');
         } else {
             $user = $this->getUser();
             return $this->render('profile/profile.html.twig', [
