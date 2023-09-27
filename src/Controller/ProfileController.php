@@ -8,11 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\Users;
+use Psr\Log\LoggerInterface;
+use App\Entity\User;
 
 class ProfileController extends AbstractController
 {
-
     #[Route('/profile', name: 'app_profile')]
     public function profile()
     {   
