@@ -8,13 +8,22 @@
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
+        
+    {{ form_row(registrationForm.email) }}
 
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+     {{ form_row(registrationForm.username) }}
 
-        <button type="submit" class="btn">Register</button>
+      {{ form_row(registrationForm.name) }}
+
+       {{ form_row(registrationForm.surname) }}
+
+        {{ form_row(registrationForm.date_of_birth) }}
+
+         {{ form_row(registrationForm.role) }}
+
+          {{ form_row(registrationForm.plainPassword) }}
+
+    <button type="submit" class="btn">Register</button>    
     {{ form_end(registrationForm) }}
+    
 {% endblock %}
