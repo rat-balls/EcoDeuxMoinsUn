@@ -3,6 +3,7 @@
 {% block title %}Challenge index{% endblock %}
 
 {% block body %}
+
     <h1>Challenge index</h1>
 
     <table class="table">
@@ -22,6 +23,7 @@
             </tr>
         </thead>
         <tbody>
+
         {% for challenge in challenges %}
             <tr>
                 <td>{{ challenge.id }}</td>
@@ -37,6 +39,7 @@
                 <td>
                     <a href="{{ path('app_challenge_show', {'id': challenge.id}) }}">show</a>
                     <a href="{{ path('app_challenge_edit', {'id': challenge.id}) }}">edit</a>
+                    
                 </td>
             </tr>
         {% else %}

@@ -31,11 +31,11 @@ class Challenge
     #[ORM\Column]
     private ?int $points = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $created_by = null;
 
-    #[ORM\Column]
-        private ?datetime $created_at = null;
+    #[ORM\Column(nullable: true)]
+        private ?int $created_at = null;
 
     #[ORM\Column]
     private ?int $status = null;
@@ -131,18 +131,17 @@ class Challenge
 
         return $this;
     }
-
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt( $created_at): static
-    {
-        $this->created_at = $created_at;
 
-        return $this;
+    public function setCreatedAt(): void
+    {
+        $this->created_at = new \DateTime("now");
     }
+
 
     public function getStatus(): ?int
     {
