@@ -20,6 +20,7 @@ class ProfileController extends AbstractController
             return $this->render('security/login.html.twig');
         } else {
             $user = $this->getUser();
+            
             return $this->render('profile/profile.html.twig', [
                 'name' => $user->getName(),
                 'surname' => $user->getSurname(),

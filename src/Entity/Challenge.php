@@ -43,6 +43,13 @@ class Challenge
     #[ORM\OneToOne(inversedBy: 'challenge', cascade: ['persist', 'remove'])]
     private ?CurrentChallenge $current_challenge = null;
 
+    public function setAcceptedBy(?User $user): self
+    {
+        $this->acceptedBy = $user;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

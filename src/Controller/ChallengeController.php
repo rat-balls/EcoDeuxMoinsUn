@@ -70,6 +70,29 @@ class ChallengeController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/{id}/accept', name: 'app_challenge_accept', methods: ['GET'])]
+    public function accept(Challenge $challenge, EntityManagerInterface $entityManager): Response
+    {
+   
+        if (!$this->getUser()) {
+       
+    
+            return $this->redirectToRoute('login'); 
+        }
+    
+
+        $challenge->setAcceptedBy($this->getUser());
+    
+
+        $entityManager->persist($challenge);
+        $entityManager->flush();
+    
+    
+    
+        return $this->redirectToRoute('app_challenge_show', ['id' => $challenge->getId()]);
+    }
+    
+
 
     #[Route('/{id}', name: 'app_challenge_delete', methods: ['POST'])]
     public function delete(Request $request, Challenge $challenge, EntityManagerInterface $entityManager): Response

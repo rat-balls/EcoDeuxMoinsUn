@@ -1,6 +1,10 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+app_challenge_accept:
+    path: '/challenge/{id}/accept'
+    controller: App\Controller\ChallengeController::accept
 
 
 
