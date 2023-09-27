@@ -2,9 +2,11 @@
 
 {% block title %}Profil de {{ username }}{% endblock %}
 
+
 {% block body %}
 
 <section style="background-color: #eee;">
+        {% include "security/logout.html.twig" %}
 
   <div class="container py-5">
     <div class="row">
