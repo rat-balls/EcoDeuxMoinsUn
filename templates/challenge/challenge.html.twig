@@ -39,6 +39,7 @@
                 <td>
                     <a href="{{ path('app_challenge_show', {'id': challenge.id}) }}">show</a>
                     {% if app.user %}
+                        <a href="{{ path('app_challenge_accept', {'id': challenge.id}) }}">accept</a>
                         {% if app.user.role == 1 %}
                             <a href="{{ path('app_challenge_edit', {'id': challenge.id}) }}">edit</a>
                         {% endif %}

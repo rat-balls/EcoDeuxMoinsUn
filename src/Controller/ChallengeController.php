@@ -5,6 +5,7 @@
 namespace App\Controller;
 
 use App\Entity\Challenge;
+use App\Entity\CurrentChallenge;
 use App\Form\ChallengeType;
 use App\Repository\ChallengeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -78,6 +79,20 @@ class ChallengeController extends AbstractController
             $entityManager->remove($challenge);
             $entityManager->flush();
         }
+
+        return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/accept', name: 'app_challenge_accept', methods: ['POST'])]
+    public function accept(Challenge $challenge, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $time = new \DateTime()
+        $curr_ch = new CurrentChallenge()
+        $curr_ch->setChallengeId($challenge.getId())
+        $curr_ch->setUserId($user.getId())
+        $curr_ch->setCreatedAt($time->format('H:i:s \O\n Y-m-d'))
+        $curr_ch->setStatus(0) // 0 = accepté, 1 = complété
 
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
     }

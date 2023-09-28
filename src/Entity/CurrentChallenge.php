@@ -25,12 +25,12 @@ class CurrentChallenge
     #[ORM\Column(nullable: true)]
     private ?int $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'challenges')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
-
     #[ORM\OneToOne(mappedBy: 'current_challenge', cascade: ['persist', 'remove'])]
     private ?Challenge $challenge = null;
+
+    #[ORM\ManyToOne(inversedBy: 'curr_challenge')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
