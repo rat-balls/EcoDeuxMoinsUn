@@ -83,17 +83,21 @@ class ChallengeController extends AbstractController
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/accept', name: 'app_challenge_accept', methods: ['POST'])]
-    public function accept(Challenge $challenge, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/accept', name: 'app_challenge_accept', methods: ['GET', 'POST'])]
+    public function accept(Request $request, EntityManagerInterface $em, Challenge $challenge): Response
     {
         $user = $this->getUser();
-        $time = new \DateTime()
-        $curr_ch = new CurrentChallenge()
-        $curr_ch->setChallengeId($challenge.getId())
-        $curr_ch->setUserId($user.getId())
-        $curr_ch->setCreatedAt($time->format('H:i:s \O\n Y-m-d'))
-        $curr_ch->setStatus(0) // 0 = accepté, 1 = complété
+        $time = new \DateTime($request->get('time'));
+        $curr_ch = new CurrentChallenge();
+        $curr_ch->setChallengeId($challenge->getId());
+        $curr_ch->setUserId($user->getId());
+        $curr_ch->setCreatedAt($time);
+        $curr_ch->setStatus(0); // 0 = accepté, 1 = complété
+        $user->addCurrChallenge($curr_ch);
+        $challenge->setCurrentChallenge($curr_ch);
 
+        $em->persist($curr_ch);
+        $em->flush();
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
     }
 
