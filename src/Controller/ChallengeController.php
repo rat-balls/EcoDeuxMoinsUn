@@ -94,7 +94,7 @@ class ChallengeController extends AbstractController
         $curr_ch->setCreatedAt($time);
         $curr_ch->setStatus(0); // 0 = accepté, 1 = complété
         $user->addCurrChallenge($curr_ch);
-        $challenge->setCurrentChallenge($curr_ch);
+        $challenge->addCurrentChallenge($curr_ch);
 
         $em->persist($curr_ch);
         $em->flush();
@@ -102,17 +102,12 @@ class ChallengeController extends AbstractController
     }
 
     #[Route('/{id}/validate', name: 'app_challenge_validate', methods: ['GET', 'POST'])]
-    public function validate(Request $request, EntityManagerInterface $em, Challenge $challenge): Response
+    public function validate(Request $request, EntityManagerInterface $em, Challenge $challenge, $id): Response
     {
         $user = $this->getUser();
-        $cr_challenges = $user->getCurrChallenge();
         $user->setPointTotal($user->getPointTotal() + $challenge->getPoints());
-        foreach($cr_challenges as $curr) {   
-            if($curr->getChallengeId() == $challenge->getId()) {
-                $curr->setStatus(1);
-                $em->persist($curr);
-            }
-        }
+        $curr = $em->getRepository(CurrentChallenge::class)->find($id);
+        $curr->setStatus(1);
         $em->flush();
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
     }

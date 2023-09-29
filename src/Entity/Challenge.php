@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChallengeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ChallengeRepository::class)]
@@ -40,8 +42,13 @@ class Challenge
     #[ORM\Column]
     private ?int $status = null;
 
-    #[ORM\OneToOne(inversedBy: 'challenge', cascade: ['persist', 'remove'])]
-    private ?CurrentChallenge $current_challenge = null;
+    #[ORM\OneToMany(mappedBy: 'challenge', targetEntity: CurrentChallenge::class, orphanRemoval: true)]
+    private Collection $current_challenge;
+
+    public function __construct()
+    {
+        $this->current_challenge = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -155,15 +162,34 @@ class Challenge
         return $this;
     }
 
-    public function getCurrentChallenge(): ?CurrentChallenge
+    /**
+     * @return Collection<int, CurrentChallenge>
+     */
+    public function getCurrentChallenge(): Collection
     {
         return $this->current_challenge;
     }
 
-    public function setCurrentChallenge(?CurrentChallenge $current_challenge): static
+    public function addCurrentChallenge(CurrentChallenge $currentChallenge): static
     {
-        $this->current_challenge = $current_challenge;
+        if (!$this->current_challenge->contains($currentChallenge)) {
+            $this->current_challenge->add($currentChallenge);
+            $currentChallenge->setChallenge($this);
+        }
 
         return $this;
     }
+
+    public function removeCurrentChallenge(CurrentChallenge $currentChallenge): static
+    {
+        if ($this->current_challenge->removeElement($currentChallenge)) {
+            // set the owning side to null (unless already changed)
+            if ($currentChallenge->getChallenge() === $this) {
+                $currentChallenge->setChallenge(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

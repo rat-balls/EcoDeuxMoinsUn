@@ -26,10 +26,10 @@ class ProfileController extends AbstractController
             $acc_challenges = [];
             foreach($cr_challenges as $curr) {   
                 if($curr->getStatus() == 1) {
-                    $challenges[$curr->getChallengeId()] = $em->getRepository(Challenge::class)->find($curr->getChallengeId());
+                    $challenges[$curr->getId()] = $curr->getChallenge();
                 }
                 else if($curr->getStatus() == 0) {
-                    $acc_challenges[$curr->getChallengeId()] = $em->getRepository(Challenge::class)->find($curr->getChallengeId());
+                    $acc_challenges[$curr->getId()] = $curr->getChallenge();
                 }
             }
             return $this->render('profile/profile.html.twig', [
