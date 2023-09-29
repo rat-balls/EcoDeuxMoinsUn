@@ -35,11 +35,26 @@
                 <td>{{ challenge.points }}</td>
                 <td>{{ challenge.createdBy }}</td>
                 <td>{{ challenge.createdAt }}</td>
-                <td>{{ challenge.status }}</td>
+                {% if challenge.currentChallenge %}
+                    {% if challenge.currentChallenge.status == 0 %}
+                        <td>Accepted</td>
+                    {% endif %}
+                    {% if challenge.currentChallenge.status == 1 %}
+                        <td>Finished</td>
+                    {% endif %}
+                {% else %}
+                    <td>Pending</td>
+                {% endif %}
                 <td>
                     <a href="{{ path('app_challenge_show', {'id': challenge.id}) }}">show</a>
                     {% if app.user %}
-                        <a href="{{ path('app_challenge_accept', {'id': challenge.id}) }}">accept</a>
+                        {% if challenge.currentChallenge %}
+                            {% if challenge.currentChallenge.status == 0 %}
+                                <a href="{{ path('app_challenge_validate', {'id': challenge.id}) }}">validate</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{{ path('app_challenge_accept', {'id': challenge.id}) }}">accept</a>
+                        {% endif %}
                         {% if app.user.role == 1 %}
                             <a href="{{ path('app_challenge_edit', {'id': challenge.id}) }}">edit</a>
                         {% endif %}

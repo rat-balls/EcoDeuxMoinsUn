@@ -101,4 +101,20 @@ class ChallengeController extends AbstractController
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[Route('/{id}/validate', name: 'app_challenge_validate', methods: ['GET', 'POST'])]
+    public function validate(Request $request, EntityManagerInterface $em, Challenge $challenge): Response
+    {
+        $user = $this->getUser();
+        $cr_challenges = $user->getCurrChallenge();
+        $user->setPointTotal($user->getPointTotal() + $challenge->getPoints());
+        foreach($cr_challenges as $curr) {   
+            if($curr->getChallengeId() == $challenge->getId()) {
+                $curr->setStatus(1);
+                $em->persist($curr);
+            }
+        }
+        $em->flush();
+        return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 }
