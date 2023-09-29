@@ -5,12 +5,17 @@
 
 {% block body %}
 
-<section style="background-color: #eee;">
-  
-  <div class="card mt-4 mb-4">
-    <div class="card-body">
-    <div class="col-sm-3">
-      <p class="mb-0">Leaderboard:</p>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row justify-content-center align-items-center h-100"> {# Ajout de justify-content-center et align-items-center ici #}
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="mx-auto">
+                <h6>LeaderBoard:</h6>
+              <div>
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1 text-center"> 
     </div>
     <hr>
       {% for user in users|sort((b, a) => a.pointTotal <=> b.pointTotal) %}
