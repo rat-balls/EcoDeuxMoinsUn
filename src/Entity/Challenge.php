@@ -50,6 +50,13 @@ class Challenge
         $this->current_challenge = new ArrayCollection();
     }
 
+    public function setAcceptedBy(?User $user): self
+    {
+        $this->acceptedBy = $user;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
