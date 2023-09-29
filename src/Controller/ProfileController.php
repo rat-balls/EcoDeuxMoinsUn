@@ -23,8 +23,14 @@ class ProfileController extends AbstractController
             $user = $this->getUser();
             $cr_challenges = $user->getCurrChallenge();
             $challenges = [];
+            $acc_challenges = [];
             foreach($cr_challenges as $curr) {   
-                $challenges[$curr->getChallengeId()] = $em->getRepository(Challenge::class)->find($curr->getChallengeId());
+                if($curr->getStatus() == 1) {
+                    $challenges[$curr->getChallengeId()] = $em->getRepository(Challenge::class)->find($curr->getChallengeId());
+                }
+                else if($curr->getStatus() == 0) {
+                    $acc_challenges[$curr->getChallengeId()] = $em->getRepository(Challenge::class)->find($curr->getChallengeId());
+                }
             }
             return $this->render('profile/profile.html.twig', [
                 'name' => $user->getName(),
@@ -36,7 +42,8 @@ class ProfileController extends AbstractController
                 'last_login' => $user->getLastConnection(),
                 'created_at' => $user->getCreatedAt(),
                 'points' => $user->getPointTotal(),
-                'challenges' => $challenges
+                'challenges' => $challenges,
+                'acc_challenges' => $acc_challenges
             ]);
         }
     }
