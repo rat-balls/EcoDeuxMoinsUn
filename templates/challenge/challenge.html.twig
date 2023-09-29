@@ -48,7 +48,11 @@
                 <td>{{ challenge.subcategory }}</td>
                 <td>{{ challenge.points }}</td>
                 <td>{{ challenge.createdBy }}</td>
-                <td>{{ challenge.createdAt }}</td>
+                {% if challenge.createdBy %}
+                    <td>{{ challenge.createdAt|date("Y-m-d H:i:s", "+0200") }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
                 {% if challenge.currentChallenge %}
                     {% for curr in challenge.currentChallenge|filter(curr => curr.user == app.user) %}
                         {% if curr.status == 0 %}

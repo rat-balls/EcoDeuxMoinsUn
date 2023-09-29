@@ -34,10 +34,10 @@ class Challenge
     private ?int $points = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $created_by = null;
+    private ?string $created_by = null;
 
     #[ORM\Column(nullable: true)]
-        private ?int $created_at = null;
+        private ?\DateTime $created_at = null;
 
     #[ORM\Column]
     private ?int $status = null;

@@ -18,9 +18,6 @@ class ChallengeType extends AbstractType
             ->add('category')
             ->add('subcategory')
             ->add('points')
-            ->add('created_by')
-            ->add('created_at')
-            ->add('status')
         ;
     }
 
