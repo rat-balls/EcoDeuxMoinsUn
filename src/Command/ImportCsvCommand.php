@@ -92,7 +92,7 @@ class ImportCsvCommand extends Command
     if (isset($data[7]) && (string)$data[7] !== "") {
         $challenge->setConditions((string)$data[7]);
     } else {
-        $challenge->setConditions("Autres");
+        $challenge->setConditions(100000);
     }
 
     $entityManager->persist($challenge);
