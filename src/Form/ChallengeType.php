@@ -21,7 +21,6 @@ class ChallengeType extends AbstractType
            ->add('created_by')
            ->add('created_at')
             ->add('status')
-            ->add('current_challenge')
         ;
     }
 

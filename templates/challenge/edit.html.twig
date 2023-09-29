@@ -3,11 +3,20 @@
 {% block title %}Edit Challenge{% endblock %}
 
 {% block body %}
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row justify-content-center align-items-center h-100"> {# Ajout de justify-content-center et align-items-center ici #}
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1 text-center"> 
+              
     <h1>Edit Challenge</h1>
 
     {{ include('challenge/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_challenge_index') }}">back to list</a>
+    <a href="{{ path('app_challenge_index') }}"class="btn btn-sm btn-info mb-2">back to list</a>
 
     {{ include('challenge/_delete_form.html.twig') }}
 {% endblock %}
