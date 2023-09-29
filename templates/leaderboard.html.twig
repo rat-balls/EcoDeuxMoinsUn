@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leaderboard{% endblock %}
+
+
+{% block body %}
+
+<section style="background-color: #eee;">
+  
+  <div class="card mt-4 mb-4">
+    <div class="card-body">
+    <div class="col-sm-3">
+      <p class="mb-0">Leaderboard:</p>
+    </div>
+    <hr>
+      {% for user in users|sort((b, a) => a.pointTotal <=> b.pointTotal) %}
+          <div class="row">
+            <div class="col-sm-3">
+              <p class="mb-0">{{ user.username }}</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="text-muted mb-0">{{ user.pointTotal }}</p>
+            </div>
+          </div>
+        {% if loop.last == false %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

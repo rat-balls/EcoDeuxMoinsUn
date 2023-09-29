@@ -35,14 +35,34 @@
                 <td>{{ challenge.points }}</td>
                 <td>{{ challenge.createdBy }}</td>
                 <td>{{ challenge.createdAt }}</td>
-                <td>{{ challenge.status }}</td>
+                {% if challenge.currentChallenge %}
+                    {% for curr in challenge.currentChallenge|filter(curr => curr.user == app.user) %}
+                        {% if curr.status == 0 %}
+                            <td>Accepted</td>
+                        {% else %}
+                            {% if curr.status == 1 %}
+                                <td>Finished</td>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        <td>Pending</td>
+                    {% endfor %}
+                {% endif %}
                 <td>
                     <a href="{{ path('app_challenge_show', {'id': challenge.id}) }}">show</a>
                     {% if app.user %}
-                        <a href="{{ path('app_challenge_accept', {'id': challenge.id}) }}">accept</a>
-                        {% if app.user.role == 1 %}
-                            <a href="{{ path('app_challenge_edit', {'id': challenge.id}) }}">edit</a>
+                        {% if challenge.currentChallenge %}
+                            {% for curr in challenge.currentChallenge|filter(curr => curr.user == app.user) %}
+                                    {% if curr.status == 0 %}
+                                        <a href="{{ path('app_challenge_validate', {'id': curr.id}) }}">validate</a>
+                                    {% endif %}
+                            {% else %}
+                                <a href="{{ path('app_challenge_accept', {'id': challenge.id}) }}">accept</a>
+                            {% endfor %}  
                         {% endif %}
+                            {% if app.user.role == 1 %}
+                                <a href="{{ path('app_challenge_edit', {'id': challenge.id}) }}">edit</a>
+                            {% endif %}
                     {% endif %}
                      <a href="{{ path('app_challenge_accept', {'id': challenge.id}) }}">accept</a>
                 </td>

@@ -21,6 +21,17 @@ class ProfileController extends AbstractController
             return $this->render('security/login.html.twig');
         } else {
             $user = $this->getUser();
+            $cr_challenges = $user->getCurrChallenge();
+            $challenges = [];
+            $acc_challenges = [];
+            foreach($cr_challenges as $curr) {   
+                if($curr->getStatus() == 1) {
+                    $challenges[$curr->getId()] = $curr->getChallenge();
+                }
+                else if($curr->getStatus() == 0) {
+                    $acc_challenges[$curr->getId()] = $curr->getChallenge();
+                }
+            }
             return $this->render('profile/profile.html.twig', [
                 'name' => $user->getName(),
                 'surname' => $user->getSurname(),
@@ -31,7 +42,8 @@ class ProfileController extends AbstractController
                 'last_login' => $user->getLastConnection(),
                 'created_at' => $user->getCreatedAt(),
                 'points' => $user->getPointTotal(),
-                'challenges' => $challenges
+                'challenges' => $challenges,
+                'acc_challenges' => $acc_challenges
             ]);
         }
     }

@@ -51,65 +51,65 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1">Current Challenge</span>:
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Nom:</p>
-                <p>
-                    Nom de challenge
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Description:</p>
-                <p>
-                  Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Conditions:</p>
-                <p>
-                  Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire
-                </p>
-              </div>
-            </div>
+        {% if acc_challenges %}
+          <div class="row">
+            {% for ac in acc_challenges|slice(0, 2) %}
+                <div class="col-md-6">
+                  <div class="card mb-4 mb-md-0">
+                    <div class="card-body">
+                      <p class="mb-4"><span class="text-primary font-italic me-1">Current Challenge</span>:
+                      </p>
+                      <p class="mb-1" style="font-size: .77rem;">Nom:</p>
+                      <p>
+                          {{ ac.name }}
+                      </p>
+                      <p class="mb-1" style="font-size: .77rem;">Description:</p>
+                      <p>
+                        {{ ac.description }}
+                      </p>
+                      <p class="mb-1" style="font-size: .77rem;">Conditions:</p>
+                      <p>
+                        {{ ac.conditions }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
           </div>
-          <div class="col-md-6">
-            <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-              
-                <p class="mb-4"><span class="text-primary font-italic me-1">Current Challenge</span>:
-                
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Nom:</p>
-                <p>
-                    Nom de challenge
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Description:</p>
-                <p>
-                  Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Conditions:</p>
-                <p>
-                  Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire
-                </p>
+        {% else %}
+          <div class="row">
+             <div class="col-md-6">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+                    <span class="text-primary font-italic me-1 mb-4">No Current Challenge</span>
+                  </div>
+                </div>
               </div>
-            </div>
           </div>
-        </div>
+        {% endif %}
+      {% if challenges %}
         <div class="card mt-4 mb-4">
           <div class="card-body">
+          <div class="col-sm-3">
+            <p class="mb-0">Finished challenges:</p>
+          </div>
+          <hr>
             {% for challenge in challenges %}
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">{{ challenge.name }}</p>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">{{ challenge.name }}</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ challenge.description }}</p>
+                  </div>
                 </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">{{ challenge.description }}</p>
-                </div>
-              </div>
-              <hr>
+              {% if loop.last == false %}
+                <hr>
+              {% endif %}
             {% endfor %}
           </div>
         </div>
+      {% endif %}
       </div>
     </div>
   </div>
