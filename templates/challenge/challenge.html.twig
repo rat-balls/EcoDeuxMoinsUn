@@ -68,7 +68,7 @@
                         {% if challenge.currentChallenge %}
                             {% for curr in challenge.currentChallenge|filter(curr => curr.user == app.user) %}
                                     {% if curr.status == 0 %}
-                                        <a href="{{ path('app_challenge_validate', {'id': curr.id}) }}"class="btn btn-sm btn-info mb-2">Show</a>
+                                        <a href="{{ path('app_challenge_validate', {'id': curr.id}) }}"class="btn btn-sm btn-info mb-2">Validate</a>
                                     {% endif %}
                             {% else %}
                                 <a href="{{ path('app_challenge_accept', {'id': challenge.id}) }}"class="btn btn-sm btn-info mb-2">Accept</a>
