@@ -17,9 +17,21 @@ class ChallengeController extends AbstractController
 {
     #[Route('/', name: 'app_challenge_index', methods: ['GET'])]
     public function index(ChallengeRepository $challengeRepository): Response
-    {
+    {   
+        $done = 0;
+        if($this->getUser()) {
+            $user = $this->getUser();
+            $cr_challenges = $user->getCurrChallenge();
+            foreach($cr_challenges as $curr) {   
+                if($curr->getStatus() == 1) {
+                    $done += 1;
+                }
+            }
+        }
+
         return $this->render('challenge/challenge.html.twig', [
             'challenges' => $challengeRepository->findAll(),
+            'done' => $done
         ]);
     }
 
