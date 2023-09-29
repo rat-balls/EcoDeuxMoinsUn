@@ -10,17 +10,17 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Validator\Constraints as Assert;
 use Psr\Log\LoggerInterface;
 use App\Entity\User;
+use App\Entity\Challenge;
 
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function profile()
+    public function profile(EntityManagerInterface $em)
     {   
         if(!$this->getUser()) {
             return $this->render('security/login.html.twig');
         } else {
             $user = $this->getUser();
-            
             return $this->render('profile/profile.html.twig', [
                 'name' => $user->getName(),
                 'surname' => $user->getSurname(),
@@ -30,9 +30,9 @@ class ProfileController extends AbstractController
                 'role' => $user->getRole(),
                 'last_login' => $user->getLastConnection(),
                 'created_at' => $user->getCreatedAt(),
-                'points' => $user->getPointTotal()
+                'points' => $user->getPointTotal(),
+                'challenges' => $challenges
             ]);
         }
     }
-
 }

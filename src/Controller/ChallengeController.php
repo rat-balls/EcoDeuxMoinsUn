@@ -5,6 +5,7 @@
 namespace App\Controller;
 
 use App\Entity\Challenge;
+use App\Entity\CurrentChallenge;
 use App\Form\ChallengeType;
 use App\Repository\ChallengeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +20,7 @@ class ChallengeController extends AbstractController
     #[Route('/', name: 'app_challenge_index', methods: ['GET'])]
     public function index(ChallengeRepository $challengeRepository): Response
     {
-        return $this->render('challenge/index.html.twig', [
+        return $this->render('challenge/challenge.html.twig', [
             'challenges' => $challengeRepository->findAll(),
         ]);
     }
@@ -102,6 +103,24 @@ class ChallengeController extends AbstractController
             $entityManager->flush();
         }
 
+        return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/accept', name: 'app_challenge_accept', methods: ['GET', 'POST'])]
+    public function accept(Request $request, EntityManagerInterface $em, Challenge $challenge): Response
+    {
+        $user = $this->getUser();
+        $time = new \DateTime($request->get('time'));
+        $curr_ch = new CurrentChallenge();
+        $curr_ch->setChallengeId($challenge->getId());
+        $curr_ch->setUserId($user->getId());
+        $curr_ch->setCreatedAt($time);
+        $curr_ch->setStatus(0); // 0 = accepté, 1 = complété
+        $user->addCurrChallenge($curr_ch);
+        $challenge->setCurrentChallenge($curr_ch);
+
+        $em->persist($curr_ch);
+        $em->flush();
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
     }
 

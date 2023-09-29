@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -53,6 +54,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $point_total = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CurrentChallenge::class, orphanRemoval: true)]
+    private Collection $curr_challenge;
+
+    public function __construct()
+    {
+        $this->curr_challenge = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -230,6 +238,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPointTotal(int $point_total): static
     {
         $this->point_total = $point_total;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CurrentChallenge>
+     */
+    public function getCurrChallenge(): Collection
+    {
+        return $this->curr_challenge;
+    }
+
+    public function addCurrChallenge(CurrentChallenge $currChallenge): static
+    {
+        if (!$this->curr_challenge->contains($currChallenge)) {
+            $this->curr_challenge->add($currChallenge);
+            $currChallenge->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCurrChallenge(CurrentChallenge $currChallenge): static
+    {
+        if ($this->curr_challenge->removeElement($currChallenge)) {
+            // set the owning side to null (unless already changed)
+            if ($currChallenge->getUser() === $this) {
+                $currChallenge->setUser(null);
+            }
+        }
 
         return $this;
     }
