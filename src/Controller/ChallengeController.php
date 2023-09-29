@@ -1,7 +1,5 @@
 <?php
 
-#
-
 namespace App\Controller;
 
 use App\Entity\Challenge;
@@ -111,5 +109,4 @@ class ChallengeController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
     }
-
 }
