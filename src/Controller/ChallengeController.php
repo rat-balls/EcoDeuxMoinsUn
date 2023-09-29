@@ -29,9 +29,11 @@ class ChallengeController extends AbstractController
         $challenge = new Challenge();
         $form = $this->createForm(ChallengeType::class, $challenge);
         $form->handleRequest($request);
-
+        $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
-           
+            $challenge->setCreatedBy($user->getUsername());
+            $challenge->setCreatedAt(new \DateTime($request->get('time')));
+            $challenge->setStatus(0);
             $entityManager->persist($challenge);
             $entityManager->flush();
 
